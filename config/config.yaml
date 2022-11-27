@@ -1,0 +1,80 @@
+#水线调优策略，0为遍历搜索，1为集中调优
+tuning_mode: 1
+
+#水线调优搜索空间
+max_Leaf_ecn_highlimit: 3000       #Leaf交换机ECN高水线上限
+max_Spine_ecn_highlimit: 4000       #Spine交换机ECN高水线上限
+max_ecn_probility: 100           #ECN标记概率最大值
+max_ingress_pfc_alpha: 100       #PFC Alpha最大值
+max_Leaf_pfc_headroom: 1000        #Leaf交换机headroom最大值
+max_Spine_pfc_headroom: 1000        #交换机headroom最大值
+
+
+#初始默认水线，请根据实际情况替换value
+init_Leaf_ecn_highlimit: value       #Leaf交换机ECN高水线
+init_Spine_ecn_highlimit: value       #Spine交换机ECN高水线
+init_Leaf_ecn_lowlimit: value         #Leaf交换机ECN低水线
+init_Spine_ecn_lowlimit: value         #Spine交换机ECN低水线
+init_ecn_probility: value            #ECN标记概率最大值
+init_Leaf_ingress_pfc_alpha: value      #PFC Alpha最大值
+init_Spine_ingress_pfc_alpha: value      #PFC Alpha最大值
+init_Leaf_pfc_headroom: value         #Leaf交换机headroom最大值
+init_Spine_pfc_headroom: value         #Spine交换机headroom最大
+
+#初始化算法调优参数
+step_length_init: 0.2                                    #初始化步长
+parameter_tuning_number: 1                               #单次调优参数数量，越大，则广度搜索能力越强；越小，则深度搜索能力越强
+first_step_init: 0.1                                     #初始解构造
+max_iteration: 100                                       #最大迭代次数
+telemetry_aggregation_strategy: ["sum","percentile99"]   #遥测监控数据聚合策略
+throughput_weight: 0.5                                   #吞吐权重
+latency_weight: 0.5                                      #延迟权重 
+telemetry_duration: 0.5                                  #交换机遥测监控观察时长，单位为分钟
+tuning_parameter_number: 5                               #调优参数，一般是5个，ECN三个，PFC两个
+
+#交换机登陆配置信息，此username和password仅供示意用
+switch_ssh_username: "tanlizhuang"
+switch_ssh_password: "abcdefghigklmn"
+
+#二打一被调优交换机对象信息
+switch_information:
+- switch_ip: 10.32.124.82                                #交换机登陆地址
+  vendor_name: H3C                                       #交换机品牌型号         
+  switch_level: Leaf                                       #交换机归属层级
+  #ingress_port: ['HGE1/0/25','HGE1/0/26']                #交换机入方向接口配置(二打一)
+  ingress_port: ['HGE1/0/25','HGE1/0/26','WGE1/0/4','WGE1/0/5','WGE1/0/6','WGE1/0/7','WGE1/0/8']                #交换机入方向接口配置(二十四打一INCAST)
+  egress_port: ['WGE1/0/3']                              #交换机出方向接口配置
+  #grafana_ingress_port: ['100GE1/0/25','100GE1/0/26']   #交换机入方向接口监控大盘
+  grafana_ingress_port: ['100GE1/0/26']                  #交换机入方向接口监控大盘
+  grafana_egress_port: ['25GE1/0/3']                     #交换机出方向接口监控大盘
+  telemetry_ip: 10.32.125.82                             #交换机遥测监控地址
+- switch_ip: 10.32.124.83
+  vendor_name: H3C
+  switch_level: Leaf
+  #ingress_port: ['WGE1/0/1','WGE1/0/2']                #交换机入方向接口配置(二打一)
+  ingress_port: ['WGE1/0/1','WGE1/0/2','WGE1/0/3','WGE1/0/4','WGE1/0/5']                #交换机入方向接口配置(二十四打一INCAST)
+  egress_port: ['HGE1/0/26']
+  #egress_port: ['HGE1/0/25','HGE1/0/26']
+  grafana_ingress_port: ['25GE1/0/1','25GE1/0/2']
+  grafana_egress_port: ['100GE1/0/26']
+  telemetry_ip: 10.32.125.83
+#- switch_ip: 10.32.124.19
+#  vendor_name: H3C
+#  switch_level: Spine
+#  ingress_port: ['H1/1/9']
+#  egress_port: ['H1/1/8']
+#  grafana_ingress_port: ['100GE1/1/9']
+#  grafana_egress_port: ['100GE1/1/8']
+#  telemetry_ip: 10.32.125.19
+
+#- switch_ip: 10.32.124.13
+#  vendor_name: Arista
+#  switch_level: Spine
+#  ingress_port: ['H1/1/9']
+#  egress_port: ['H1/1/8']
+#  grafana_ingress_port: ['100GE1/1/9']
+#  grafana_egress_port: ['100GE1/1/8']
+#  telemetry_ip: 10.32.125.13
+
+#调优结果存储目录
+result_file_path: "./result"
