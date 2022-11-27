@@ -1,7 +1,7 @@
  
 <img src="./bytetuning_logo.png" width = "200"/>
 
-# ByteTuning: A centralized RoCEv2ECN/PFC waterline tuning algorithm
+# ByteTuning: A centralized RoCEv2 ECN/PFC watermark tuning algorithm
 
 ## Environmental Dependence: 
 
