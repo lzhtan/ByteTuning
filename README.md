@@ -30,4 +30,6 @@ Python>=3.6, netmiko
 
 &ensp; --...
 
+For more details, please refer to our [paper](https://ieeexplore.ieee.org/document/10820527)
+
 If you have any questions, please contact tanlzh@sdas.org
